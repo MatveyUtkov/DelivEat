@@ -1,11 +1,38 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:deliveat/presentation/Pages/HomePage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:deliveat/model/github_login_request.dart';
+import 'package:deliveat/model/github_login_response.dart';
+import 'package:deliveat/widgets/secret_keys.dart' as SecretKey;
 class Authentication {
+  final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
+  Future<User?> loginWithGitHub(String code) async {
+    //ACCESS TOKEN REQUEST
+    final response = await http.post(
+      "https://github.com/login/oauth/access_token" as Uri,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: jsonEncode(GitHubLoginRequest(
+        clientId: SecretKey.GITHUB_CLIENT_ID,
+        clientSecret: SecretKey.GITHUB_CLIENT_SECRET,
+        code: code,
+      )),
+    );
+    GitHubLoginResponse loginResponse = GitHubLoginResponse.fromJson(json.decode(response.body));
+//FIREBASE SIGNIN
+    final auth.AuthCredential credential = auth.GithubAuthProvider.credential(loginResponse.accessToken);
+
+    final User? user = (await _firebaseAuth.signInWithCredential(credential)).user;
+    return user;
+  }
   static Future<FirebaseApp> initializeFirebase({
     required BuildContext context,
   }) async {

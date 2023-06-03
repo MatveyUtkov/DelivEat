@@ -59,7 +59,6 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
             children: <Widget>[
               Image(
                 image: AssetImage("assets/images/google_logo.png"),
-                height: 35.0,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10),

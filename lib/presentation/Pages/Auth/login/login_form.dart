@@ -1,3 +1,4 @@
+import 'package:deliveat/widgets/onClickGitHubLoginButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,8 @@ import 'package:deliveat/bloc/repositories/user_repository.dart';
 import 'package:deliveat/domain/widgets/gradient_button.dart';
 import 'package:deliveat/utils/Authentication.dart';
 import 'package:deliveat/widgets/GoogleSignInButton.dart';
-
+import 'package:deliveat/widgets/MicrosoftSignInButton.dart';
+import 'package:deliveat/widgets/GitHubSignInButton.dart';
 import '../../../../bloc/login_bloc/login_state.dart';
 import '../register/register_screen.dart';
 
@@ -194,6 +196,30 @@ class _LoginFormState extends State<LoginForm> {
                         return const Text('Error initializing Firebase');
                       } else if (snapshot.connectionState == ConnectionState.done) {
                         return GoogleSignInButton();
+                      }
+                      return const CircularProgressIndicator(
+                      );
+                    },
+                  ),
+                  FutureBuilder(
+                    future: Authentication.initializeFirebase(context: context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text('Error initializing Firebase');
+                      } else if (snapshot.connectionState == ConnectionState.done) {
+                        return MicrosoftSignInButton();
+                      }
+                      return const CircularProgressIndicator(
+                      );
+                    },
+                  ),
+                  FutureBuilder(
+                    future: Authentication.initializeFirebase(context: context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text('Error initializing Firebase');
+                      } else if (snapshot.connectionState == ConnectionState.done) {
+                        return GitHubSignInButton();
                       }
                       return const CircularProgressIndicator(
                       );

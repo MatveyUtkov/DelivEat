@@ -61,7 +61,8 @@ class _HomePageState extends State<HomePage>
           Padding(
             padding: const EdgeInsets.only(top: 30, bottom: 40),
             child: Center(
-              child: Text(
+              child:
+              Text(
                 "Hello, ${user?.email}",
                 style: const TextStyle(
                   fontSize: 24,

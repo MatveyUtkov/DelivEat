@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ import '../../../../bloc/registration_bloc/registration_bloc.dart';
 import '../../../../bloc/registration_bloc/registration_event.dart';
 import '../../../../bloc/registration_bloc/registration_state.dart';
 import '../../../../domain/widgets/gradient_button.dart';
-
+import 'package:crypto/crypto.dart';
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
 
@@ -31,7 +33,11 @@ class _LoginFormState extends State<RegisterForm> {
   }
 
   late RegisterBloc _registerBloc;
-
+  String encryptPassword(String password) {
+    final bytes = utf8.encode(password);
+    final hash = sha256.convert(bytes);
+    return hash.toString();
+  }
   @override
   void initState() {
     super.initState();
