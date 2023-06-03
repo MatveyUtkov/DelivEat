@@ -101,7 +101,6 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    color: const Color.fromARGB(255, 30, 29, 29),
                     child: Row(
                       children: [
                         const SizedBox(width: 10),

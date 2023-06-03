@@ -23,9 +23,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2C2C33),
       ),
-      backgroundColor: const Color(0xFF2C2C33),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1f2944),
         actions: [
           Row(
             children: [
@@ -55,7 +54,6 @@ class _HomePageState extends State<HomePage>
           ),
         ],
       ),
-      backgroundColor: const Color(0xFF1f2944),
       body: Column(
         children: [
           Padding(
@@ -66,19 +64,17 @@ class _HomePageState extends State<HomePage>
                 "Hello, ${user?.email}",
                 style: const TextStyle(
                   fontSize: 24,
-                  color: Colors.white,
                 ),
               ),
             ),
           ),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
                 child: Text(
                   'Categories',
                   style: TextStyle(
-                      color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.w900),
                 ),
@@ -112,7 +108,7 @@ class _HomePageState extends State<HomePage>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Menu(),
+                                      builder: (context) => const Menu(),
                                     ),
                                   );
                                 },
@@ -137,14 +133,13 @@ class _HomePageState extends State<HomePage>
               ),
             ),
           ),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
                 child: Text(
                   'Restaraunts',
                   style: TextStyle(
-                    color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.w900,
                   ),
@@ -170,7 +165,7 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => Menu(),
+                                        builder: (context) => const Menu(),
                                       ),
                                     );
                                   },

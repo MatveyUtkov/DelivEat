@@ -14,9 +14,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  final deepBlue = const Color(0xFF678094);
-  final backBottNavBar = const Color(0xFFfa8b9b);
-  final backScreenColor = Colors.black;
+
 
   int index = 0;
 
@@ -31,17 +29,13 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:screenList[index],
-      backgroundColor: backScreenColor,
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          indicatorColor:const Color(0xFFfa8b9b),
-          backgroundColor: backBottNavBar,
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           labelTextStyle: MaterialStateProperty.all(
             const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: Colors.black,
             ),
           ),
         ),
@@ -54,7 +48,6 @@ class _NavBarState extends State<NavBar> {
             NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.bellConcierge,
-                color: backScreenColor,
                 size: 30,
               ),
               label: 'Restaraunts',
@@ -62,7 +55,6 @@ class _NavBarState extends State<NavBar> {
             NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.bagShopping,
-                color: backScreenColor,
                 size: 30,
               ),
               label: 'Cart',
@@ -70,7 +62,6 @@ class _NavBarState extends State<NavBar> {
             NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.mapLocation,
-                color: backScreenColor,
                 size: 30,
               ),
               label: 'Map',
@@ -78,7 +69,6 @@ class _NavBarState extends State<NavBar> {
             NavigationDestination(
               icon: Icon(
                 FontAwesomeIcons.userCircle,
-                color: backScreenColor,
                 size: 30,
               ),
               label: 'Account',
