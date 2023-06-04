@@ -16,8 +16,8 @@ import 'package:deliveat/presentation/Pages/NavBarPage.dart';
 // ignore: unused_import
 import 'package:deliveat/presentation/SplashScreen/SplashScreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:deliveat/theme/model_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'bloc/auth_bloc.dart';
 import 'bloc/auth_bloc/auth_bloc.dart';
 import 'bloc/auth_bloc/auth_event.dart';
@@ -31,6 +31,25 @@ Future main() async{
   await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
   final UserRepository userRepository = UserRepository();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? selectedTheme = prefs.getString('theme');
+
+  ThemeData appTheme;
+
+  switch (selectedTheme) {
+    case 'light':
+      appTheme = CustomTheme.lightTheme;
+      break;
+    case 'dark':
+      appTheme = CustomTheme.darkTheme;
+      break;
+    case 'custom':
+      appTheme = CustomTheme.customTheme;
+      break;
+    default:
+      appTheme = CustomTheme.lightTheme;
+  }
+
   runApp(
     BlocProvider(
       create: (context) => AuthBloc(
@@ -38,6 +57,7 @@ Future main() async{
       )..add(AuthStarted()),
       child: MyApp(
         userRepository: userRepository,
+        theme:appTheme,
       ),
     ),
   );
@@ -55,9 +75,10 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 class MyApp extends StatelessWidget with WidgetsBindingObserver {
   final UserRepository _userRepository;
-  MyApp({required UserRepository userRepository})
-      : _userRepository = userRepository;
+  ThemeData theme;
 
+  MyApp({required UserRepository userRepository, required this.theme})
+      : _userRepository = userRepository;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ThemeNotifier>(
@@ -66,7 +87,7 @@ class MyApp extends StatelessWidget with WidgetsBindingObserver {
         builder: (context, ThemeNotifier themeNotifier,child){
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme:  themeNotifier.currentTheme,
+            theme:  theme,
             home: BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
                 if (state is AuthFailure) {

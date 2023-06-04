@@ -1,6 +1,5 @@
 import 'package:deliveat/theme/CustomTheme.dart';
 import 'package:deliveat/theme/ThemeNotifier.dart';
-import 'package:deliveat/theme/model_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:deliveat/bloc/auth_bloc/auth_event.dart';
 import 'package:deliveat/presentation/Pages/Auth/login/login_screen.dart';
 import 'package:deliveat/utils/Authentication.dart';
 import 'package:provider/provider.dart';
-import 'package:deliveat/theme/model_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../bloc/auth_bloc/auth_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -23,14 +22,13 @@ final Authentication _authService = Authentication();
 
 class _ProfilePageState extends State<ProfilePage> {
   User? currentUser = FirebaseAuth.instance.currentUser;
-
+  late ThemeData _currentTheme;
   @override
   Widget build(BuildContext context) {
          return Consumer<ThemeNotifier>(
            builder: (context,ThemeNotifier themeNotifier,child){
              
              return Scaffold(
-
                body: Column(
                  children: [
                    Container(
@@ -59,23 +57,32 @@ class _ProfilePageState extends State<ProfilePage> {
                      height: 100,
                    ),
                    ElevatedButton(
-                       onPressed: () {
+                       onPressed: () async {
                      themeNotifier.setTheme(CustomTheme.lightTheme);
-                   },
+                     SharedPreferences prefs = await SharedPreferences.getInstance();
+                     await prefs.setString('theme', 'light');
+
+                       },
                     child: Text('Switch to Light theme')
                    ),
                    ElevatedButton(
-                       onPressed: () {
+                       onPressed: () async {
                          themeNotifier.setTheme(CustomTheme.darkTheme);
+                         SharedPreferences prefs = await SharedPreferences.getInstance();
+                         await prefs.setString('theme', 'dark');
                        },
                        child: Text('Switch to Dark theme')
                    ),
                    ElevatedButton(
-                       onPressed: () {
+                       onPressed: () async {
                          themeNotifier.setTheme(CustomTheme.customTheme);
+                         SharedPreferences prefs = await SharedPreferences.getInstance();
+                         await prefs.setString('theme', 'custom');
+
                        },
                        child: Text('Switch to Custom theme')
                    ),
+
                    Container(
                      height: 100,
                      width: double.infinity,
